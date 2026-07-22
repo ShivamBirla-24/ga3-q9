@@ -26,8 +26,12 @@ client = OpenAI(
 
 @app.get("/")
 def health_check():
-    return {"status": "Q9 Math Solver API is Live!"}
-
+    # This will grab the token and show us the first 5 and last 5 characters
+    safe_token = f"{token[:5]}...{token[-5:]}" if len(token) > 10 else token
+    return {
+        "status": "Q9 Math Solver API is Live!",
+        "loaded_token_preview": safe_token
+    }
 # ================= Q9: /solve =================
 @app.post("/solve")
 async def solve_math(request: Request):
